@@ -25,12 +25,12 @@
 graph TD
     A[用戶_瀏覽器] -->|HTTP_請求| B[Nginx_反向代理]
     B -->|前端路由| C[Nuxt_3_前端]
-    B -->|API_請求_/api/*| D[Laravel_10_後端]
+    B -->|API_請求_含_JWT| D[Laravel_10_後端]
     C -->|SSR_渲染| E[產品頁_部落格頁]
-    C -->|JWT_認證| F[登入頁]
+    C -->|JWT_認證_請求| D
+    D -->|驗證_JWT_中介層| D
     D -->|購物車操作| G[Redis_購物車數據]
     D -->|資料庫操作| H[MySQL_PlanetScale_產品_訂單_用戶]
-    D -->|認證| I[JWT_Middleware]
     C -->|API_呼叫| D
 ```
 

@@ -23,15 +23,15 @@
 
 ```mermaid
 graph TD
-    A[用戶 (瀏覽器)] -->|HTTP 請求| B(Nginx 反向代理)
-    B -->|前端路由| C[Nuxt 3 前端]
-    B -->|API 請求 /api/*| D[Laravel 10 後端]
-    C -->|SSR 渲染| E[產品頁/部落格頁]
-    C -->|JWT 認證| F[登入頁]
-    D -->|購物車操作| G[Redis: 購物車數據]
-    D -->|資料庫操作| H[MySQL/PlanetScale: 產品/訂單/用戶]
-    D -->|認證| I[JWT Middleware]
-    C -->|API 呼叫| D
+    A[用戶_瀏覽器] -->|HTTP_請求| B[Nginx_反向代理]
+    B -->|前端路由| C[Nuxt_3_前端]
+    B -->|API_請求_/api/*| D[Laravel_10_後端]
+    C -->|SSR_渲染| E[產品頁_部落格頁]
+    C -->|JWT_認證| F[登入頁]
+    D -->|購物車操作| G[Redis_購物車數據]
+    D -->|資料庫操作| H[MySQL_PlanetScale_產品_訂單_用戶]
+    D -->|認證| I[JWT_Middleware]
+    C -->|API_呼叫| D
 ```
 
 ## 目錄結構

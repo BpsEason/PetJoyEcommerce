@@ -28,7 +28,7 @@ graph TD
     C -->|SSR_渲染| E[產品頁_部落格頁]
     C -->|JWT_認證_請求| D[Laravel_10_後端]
     B -->|API_請求_含_JWT| D
-    D -->|JWT_驗證| D
+    C -->|API_數據| D
     D -->|購物車操作| G[Redis_購物車數據]
     D -->|資料庫操作| H[PlanetScale_產品_訂單_用戶]
 ```

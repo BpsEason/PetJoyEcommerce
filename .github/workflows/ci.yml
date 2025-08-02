@@ -1,0 +1,53 @@
+# .github/workflows/ci.yml
+# 此 GitHub Actions 檔案用於自動化 CI/CD 工作流程，當有新的程式碼推送到 main 分支時觸發。
+
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 檢查程式碼
+      uses: actions/checkout@v4
+
+    - name: 設定 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: 設定 PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: pdo_mysql, mbstring, dom, fileinfo
+        ini-values: post_max_size=256M, upload_max_filesize=256M
+
+    - name: 安裝 Composer 依賴
+      working-directory: ./backend
+      run: composer install --no-interaction --prefer-dist
+
+    - name: 安裝 Nuxt 前端依賴
+      working-directory: ./frontend
+      run: npm install
+
+    - name: 執行 Laravel 測試
+      working-directory: ./backend
+      run: php artisan test
+      # 註解: 實際測試需要一個資料庫，可能需要使用服務容器。
+
+    - name: 執行 Nuxt 測試
+      working-directory: ./frontend
+      run: npm run test
+      # 註解: 需要額外設定 Nuxt 的測試框架，例如 Vitest。
+
+    - name: 部署 (DRAFT)
+      if: github.ref == 'refs/heads/main'
+      run: echo "部署腳本將在此處執行..."
+      # 註解: 在此添加您實際的部署腳本或步驟。

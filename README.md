@@ -23,19 +23,20 @@
 
 ```mermaid
 graph TD
-    A[用戶_瀏覽器] -->|HTTP_請求| B[Nginx_反向代理]
-    B -->|前端路由| C[Nuxt_3_前端]
-    C -->|SSR_渲染| E[產品頁_部落格頁]
-    C -->|JWT_認證_請求| D[Laravel_10_後端]
-    B -->|API_請求_含_JWT| D
-    C -->|API_數據| D
-    D -->|購物車操作| G[Redis_購物車數據]
-    D -->|資料庫操作| H[PlanetScale_產品_訂單_用戶]
+    subgraph 前端流程
+        UA[🧑‍💻 用戶瀏覽器] -->|HTTP 請求| RP[Nginx 反向代理]
+        RP -->|路由至前端| FE[Nuxt 3 前端]
+        FE -->|SSR 渲染| BLOG[產品/部落格頁]
+        FE -->|JWT 認證請求 + API 資料| BE[Laravel 10 後端]
+    end
 
-    I[管理員_後台登入] -->|HTTP_請求| B
-    B -->|路由_後台頁| J[Nuxt_3_後台介面]
-    J -->|JWT_認證| D
-    J -->|管理商品_訂單_內容| D
+    subgraph 後端流程
+        ADMIN[🛠 管理員登入] -->|HTTP 請求| RP
+        RP -->|路由至後台| DASH[Nuxt 3 後台介面]
+        DASH -->|JWT 認證 + 商品/訂單管理| BE
+        BE -->|資料庫操作| DB[PlanetScale 資料庫]
+        BE -->|購物車操作| REDIS[Redis 購物車資料]
+    end
 
 ```
 
